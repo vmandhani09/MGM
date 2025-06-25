@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Practical 05</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+
+            padding: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        p{
+            font-family: 'Courier New', Courier, monospace;
+            font-size: large;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>a. Find Length of a String</h3>
+    <input type="text" id="stringInput" placeholder="Enter a string"><br>
+    <button onclick="showStringLength()">Get Length</button>
+    <p id="stringLengthOutput"></p>
+
+    <h3>b. Reverse Digits of a Number</h3>
+    <input type="number" id="numberInput" placeholder="Enter a number"><br>
+    <button onclick="showReversedNumber()">Reverse Number</button>
+    <p id="numberReverseOutput"></p>
+
+    <script>
+
+        function getStringLength(str) {
+            return str.length;
+        }
+
+        function showStringLength() {
+            var input = document.getElementById("stringInput").value;
+            var length = getStringLength(input);
+            document.getElementById("stringLengthOutput").textContent = "Length of the string is: " + length;
+        }
+
+        function reverseNumber(num) {
+            return num.toString().split("").reverse().join("");
+        }
+
+        function showReversedNumber() {
+            var input = document.getElementById("numberInput").value;
+            var reversed = reverseNumber(input);
+            document.getElementById("numberReverseOutput").textContent = "Reversed number is: " + reversed;
+        }
+    </script>
+
+</body>
+</html>

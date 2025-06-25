@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Form Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.7rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 0.8em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Employee Form</h2>
+        <form onsubmit="return validateForm()">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+            <span id="nameError" class="error"></span><br>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email">
+            <span id="emailError" class="error"></span><br>
+
+            <label for="mobile">Mobile No:</label>
+            <input type="text" id="mobile" name="mobile">
+            <span id="mobileError" class="error"></span><br>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address"></textarea>
+            <span id="addressError" class="error"></span><br>
+
+            <label for="salary">Salary:</label>
+            <input type="text" id="salary" name="salary">
+            <span id="salaryError" class="error"></span><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            var validMobilePrefixes = ["70", "75", "76", "77", "78", "79","98", "99", "96", "95", "94","97", "93", "92","89", "85"];                        
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var mobile = document.getElementById("mobile").value;
+            var address = document.getElementById("address").value;
+            var salary = document.getElementById("salary").value;
+
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            var mobilePattern = /^[0-9]{10}$/;
+            var isValid = true;
+
+            if (name == "") {
+                document.getElementById("nameError").textContent = "Name must be filled out";
+                isValid = false;
+            }
+            if (email == "") {
+                document.getElementById("emailError").textContent = "Email must be filled out";
+                isValid = false;
+            } else if (!email.match(emailPattern)) {
+                document.getElementById("emailError").textContent = "Please enter a valid email address";
+                isValid = false;
+            }
+           
+
+            if (mobile == "") {
+                document.getElementById("mobileError").textContent = "Mobile number must be filled out";
+                isValid = false;
+            } else if (!mobile.match(mobilePattern)) {
+                document.getElementById("mobileError").textContent = "Please enter a valid 10-digit mobile number";
+                isValid = false;
+            } else {
+                var prefix = mobile.substring(0, 2);
+                if (!validMobilePrefixes.includes(prefix)) {
+                    document.getElementById("mobileError").textContent = "Please enter a valid number available in india(jio,airtail,bsnl,vi)";
+                    isValid = false;
+                }
+            }
+            if (address == "") {
+                document.getElementById("addressError").textContent = "Address must be filled out";
+                isValid = false;
+            }
+            if (salary == "") {
+                document.getElementById("salaryError").textContent = "Salary must be filled out";
+                isValid = false;
+            } else if (isNaN(salary) || salary <= 0) {
+                document.getElementById("salaryError").textContent = "Please enter a valid salary";
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>

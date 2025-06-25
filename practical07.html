@@ -1,0 +1,47 @@
+<?php
+date_default_timezone_set("Asia/Kolkata");
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            color: #fff;
+        }
+        #clock {
+            font-size: 3rem;
+            font-weight: bold;
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div id="clock"><?php echo date("h:i:s A"); ?></div>
+
+    <script>
+        function updateClock() {
+            fetch("clock.php")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("clock").innerHTML = data;
+                })
+                .catch(error => console.error("Error fetching time:", error));
+        }
+
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
